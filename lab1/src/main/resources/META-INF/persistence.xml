@@ -12,7 +12,7 @@
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<!-- tự thêm url csdl, tên csdl, tên instanceName -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=PolyOE;instanceName=HIEU;encrypt=true;trustServerCertificate=true" />
+				value="jdbc:sqlserver://localhost:1433;databaseName=PolyOE;encrypt=true;trustServerCertificate=true" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<!-- password -->
 			<property name="javax.persistence.jdbc.password" value="123456" />
