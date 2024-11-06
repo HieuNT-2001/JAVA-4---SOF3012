@@ -1,3 +1,4 @@
+
 package model;
 
 import javax.persistence.Column;
@@ -5,23 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//Annotation cho biết class User đại diện cho một bảng trong csdl
 @Entity
+//Annotation cho biết đây là tên bảng trong csdl
 @Table(name = "Users")
 public class User {
+	// khóa chính
 	@Id
-	@Column(name = "Id")
+	// tên trường
+	@Column(name = "id")
+	// String -> nvarchar
 	String id;
-	@Column(name ="Password")
+
+	@Column(name = "password")
 	String password;
-	@Column(name = "Fullname")
+
+	@Column(name = "fullname")
 	String fullname;
-	@Column(name = "Email")
+
+	@Column(name = "email")
 	String email;
-	@Column(name = "Admin")
+
+	@Column(name = "admin")
+	// Boolean -> bit
 	Boolean admin = false;
 
 	public User() {
-		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public User(String id, String password, String fullname, String email, Boolean admin) {
@@ -72,5 +83,4 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-
 }
