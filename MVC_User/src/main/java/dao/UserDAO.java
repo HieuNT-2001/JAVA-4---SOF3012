@@ -12,14 +12,14 @@ import model.User;
 public class UserDAO {
 
 	// kết nối csdl
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("PolyOE");
+	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("PolyOE");
 
 	// truy vấn csdl
-	EntityManager em = factory.createEntityManager();
+	static EntityManager em = factory.createEntityManager();
 
 	// CRUD
 	// Tìm kiếm tất cả bàn ghi trong bảng Users
-	public List<User> findAll() {
+	public static List<User> findAll() {
 		// truy vấn jpql, lấy tất cả bản ghi của lớp User
 		String jpql = "SELECT o FROM User o";
 
@@ -30,6 +30,49 @@ public class UserDAO {
 		// getResultList(): lấy List đối tượng trả về trong class User
 		List<User> list = query.getResultList();
 		return list;
+	}
+
+	public static User findById(String id) {
+		return em.find(User.class, id);
+	}
+	
+	public static void create(User entity) {
+		try {
+			em.getTransaction().begin();
+			em.persist(entity);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			em.getTransaction().rollback();
+		}
+	}
+	
+	public static void update(User entity) {
+		entity.setId(entity.getId());
+		entity.setFullname(entity.getFullname());
+		entity.setPassword(entity.getPassword());
+		entity.setEmail(entity.getEmail());
+		entity.setAdmin(entity.getAdmin());
+		try {
+			em.getTransaction().begin();
+			em.merge(entity);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			em.getTransaction().rollback();
+		}
+	}
+	
+	public static void deleteById(String id) {
+		User entity = findById(id);
+		try {
+			em.getTransaction().begin();
+			em.remove(entity);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			em.getTransaction().rollback();
+		}
 	}
 
 }

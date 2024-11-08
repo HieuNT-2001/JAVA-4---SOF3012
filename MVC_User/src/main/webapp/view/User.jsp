@@ -79,31 +79,39 @@
 
         <body>
             <div class="form-container">
-                <div>
-                    <label for="id">Id:</label>
-                    <input type="text" id="id" name="id">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div>
-                    <label for="fullname">Fullname:</label>
-                    <input type="text" id="fullname" name="fullname">
-                    <label for="email">Email Address:</label>
-                    <input type="text" id="email" name="email">
-                </div>
-                <div>
-                    <label>Role:</label>
-                    <input type="radio" id="admin" name="role" value="admin">
-                    <label for="admin">Admin</label>
-                    <input type="radio" id="user" name="role" value="user">
-                    <label for="user">User</label>
-                </div>
-                <div class="action-buttons">
-                    <input type="button" value="Create">
-                    <input type="button" value="Update">
-                    <input type="button" value="Delete">
-                    <input type="reset" value="Reset">
-                </div>
+                <form action="../UserController/add" method="post">
+                    <div>
+                        <label for="id">Id:</label>
+                        <input type="text" id="id" name="id" required ${isEnable ? '' : 'disabled' }
+                            value="${entity.id }">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required value="${entity.password }">
+                    </div>
+                    <div>
+                        <label for="fullname">Fullname:</label>
+                        <input type="text" id="fullname" name="fullname" required value="${entity.fullname }">
+                        <label for="email">Email Address:</label>
+                        <input type="text" id="email" name="email" required value="${entity.email }">
+                    </div>
+                    <div>
+                        <label>Role:</label>
+                        <input type="radio" id="admin" name="role" value="admin" ${entity.admin ? 'checked' : '' }>
+                        <label for="admin">Admin</label>
+                        <input type="radio" id="user" name="role" value="user" ${entity.admin ? '' : 'checked' }>
+                        <label for="user">User</label>
+                    </div>
+                    <div class="action-buttons">
+                        <form method="post">
+                            <input type="hidden" name="id" value="${entity.id }">
+                            <button class="btn btn-primary" type="submit" formaction="../UserController/add" ${isEnable
+                                ? '' : 'disabled' }>Create</button>
+                            <button class="btn btn-primary" type="submit" formaction="../UserController/update"
+                                ${isEnable ? 'disabled' : '' }>Update</button>
+                            <input type="reset" value="Reset">
+                        </form>
+
+                    </div>
+                </form>
             </div>
 
             <div class="table-container">
@@ -127,7 +135,15 @@
                                 <td>${entity.password }</td>
                                 <td>${entity.email }</td>
                                 <td>${entity.admin == true ? 'admin' : 'user' }</td>
-                                <td><a href="#">Edit</a></td>
+                                <td>
+                                    <form method="post">
+                                        <input type="hidden" name="id" value="${entity.id }">
+                                        <button class="btn btn-warning" type="submit"
+                                            formaction="../UserController/edit">Edit</button>
+                                        <button class="btn btn-danger" type="submit"
+                                            formaction="../UserController/remove">Remove</button>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
