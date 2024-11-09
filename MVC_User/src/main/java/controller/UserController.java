@@ -15,7 +15,8 @@ import dao.UserDAO;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet({"/UserController/show", "/UserController/edit", "/UserController/add", "/UserController/update", "/UserController/remove"})
+@WebServlet({ "/UserController/show", "/UserController/edit", "/UserController/add", "/UserController/update",
+		"/UserController/remove" })
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean isEnable = true;
@@ -36,7 +37,7 @@ public class UserController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String url = request.getServletPath();
-		
+
 		if (url.contains("show")) {
 			request.setAttribute("list", UserDAO.findAll());
 			request.setAttribute("isEnable", isEnable);
@@ -53,7 +54,7 @@ public class UserController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String url = request.getServletPath();
-		
+
 		if (url.contains("add")) {
 			String id = request.getParameter("id");
 			String fullname = request.getParameter("fullname");
@@ -64,7 +65,7 @@ public class UserController extends HttpServlet {
 			UserDAO.create(entity);
 			response.sendRedirect("../UserController/show");
 		}
-		
+
 		if (url.contains("edit")) {
 			isEnable = false;
 			String id = request.getParameter("id");
@@ -73,7 +74,7 @@ public class UserController extends HttpServlet {
 			request.setAttribute("isEnable", isEnable);
 			request.getRequestDispatcher("../view/User.jsp").forward(request, response);
 		}
-		
+
 		if (url.contains("update")) {
 			isEnable = true;
 			String id = request.getParameter("id");
@@ -85,7 +86,7 @@ public class UserController extends HttpServlet {
 			UserDAO.update(entity);
 			response.sendRedirect("../UserController/show");
 		}
-		
+
 		if (url.contains("remove")) {
 			String id = request.getParameter("id");
 			UserDAO.deleteById(id);

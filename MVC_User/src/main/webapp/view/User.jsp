@@ -107,7 +107,8 @@
                                 ? '' : 'disabled' }>Create</button>
                             <button class="btn btn-primary" type="submit" formaction="../UserController/update"
                                 ${isEnable ? 'disabled' : '' }>Update</button>
-                            <input type="reset" value="Reset">
+                            <!-- <input type="reset" value="Reset"> -->
+                            <button class="btn btn-primary" type="reset">Reset</button>
                         </form>
 
                     </div>
