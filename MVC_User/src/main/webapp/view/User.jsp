@@ -79,7 +79,7 @@
 
         <body>
             <div class="form-container">
-                <form action="../UserController/add" method="post">
+                <form action="./UserController" method="post">
                     <div>
                         <label for="id">Id:</label>
                         <input type="text" id="id" name="id" required ${isEnable ? '' : 'disabled' }
@@ -101,16 +101,12 @@
                         <label for="user">User</label>
                     </div>
                     <div class="action-buttons">
-                        <form method="post">
-                            <input type="hidden" name="id" value="${entity.id }">
-                            <button class="btn btn-primary" type="submit" formaction="../UserController/add" ${isEnable
-                                ? '' : 'disabled' }>Create</button>
-                            <button class="btn btn-primary" type="submit" formaction="../UserController/update"
-                                ${isEnable ? 'disabled' : '' }>Update</button>
-                            <!-- <input type="reset" value="Reset"> -->
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                        </form>
-
+                        <input type="hidden" name="id" value="${entity.id }">
+                        <button type="submit" name="action" value="create" ${isEnable ? '' : 'disabled'
+                            }>Create</button>
+                        <button type="submit" name="action" value="update" ${isEnable ? 'disabled' : ''
+                            }>Update</button>
+                        <button type="reset" name="action" value="reset">Reset</button>
                     </div>
                 </form>
             </div>
@@ -137,12 +133,10 @@
                                 <td>${entity.email }</td>
                                 <td>${entity.admin == true ? 'admin' : 'user' }</td>
                                 <td>
-                                    <form method="post">
+                                    <form action="./UserController" method="post">
                                         <input type="hidden" name="id" value="${entity.id }">
-                                        <button class="btn btn-warning" type="submit"
-                                            formaction="../UserController/edit">Edit</button>
-                                        <button class="btn btn-danger" type="submit"
-                                            formaction="../UserController/remove">Remove</button>
+                                        <button type="submit" name="action" value="edit">Edit</button>
+                                        <button type="submit" name="action" value="remove">Remove</button>
                                     </form>
                                 </td>
                             </tr>

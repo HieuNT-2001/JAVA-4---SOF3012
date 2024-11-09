@@ -15,8 +15,7 @@ import dao.UserDAO;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet({ "/UserController/show", "/UserController/edit", "/UserController/add", "/UserController/update",
-		"/UserController/remove" })
+@WebServlet("/UserController")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	boolean isEnable = true;
@@ -36,14 +35,10 @@ public class UserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url = request.getServletPath();
-
-		if (url.contains("show")) {
-			request.setAttribute("list", UserDAO.findAll());
-			request.setAttribute("isEnable", isEnable);
-			request.setAttribute("entity", new User("", "", "", "", true));
-			request.getRequestDispatcher("../view/User.jsp").forward(request, response);
-		}
+		request.setAttribute("list", UserDAO.findAll());
+		request.setAttribute("isEnable", isEnable);
+		request.setAttribute("entity", new User("", "", "", "", true));
+		request.getRequestDispatcher("./view/User.jsp").forward(request, response);
 	}
 
 	/**
@@ -53,9 +48,10 @@ public class UserController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url = request.getServletPath();
+		String action = request.getParameter("action");
 
-		if (url.contains("add")) {
+		// them user
+		if (action.equals("create")) {
 			String id = request.getParameter("id");
 			String fullname = request.getParameter("fullname");
 			String password = request.getParameter("password");
@@ -63,19 +59,21 @@ public class UserController extends HttpServlet {
 			boolean isAdmin = request.getParameter("role").equals("admin");
 			User entity = new User(id, password, fullname, email, isAdmin);
 			UserDAO.create(entity);
-			response.sendRedirect("../UserController/show");
+			response.sendRedirect("./UserController");
 		}
 
-		if (url.contains("edit")) {
+		// Do user len form de edit
+		if (action.equals("edit")) {
 			isEnable = false;
 			String id = request.getParameter("id");
 			request.setAttribute("list", UserDAO.findAll());
 			request.setAttribute("entity", UserDAO.findById(id));
 			request.setAttribute("isEnable", isEnable);
-			request.getRequestDispatcher("../view/User.jsp").forward(request, response);
+			request.getRequestDispatcher("./view/User.jsp").forward(request, response);
 		}
 
-		if (url.contains("update")) {
+		// update user voi thong tin trong form
+		if (action.equals("update")) {
 			isEnable = true;
 			String id = request.getParameter("id");
 			String fullname = request.getParameter("fullname");
@@ -84,13 +82,14 @@ public class UserController extends HttpServlet {
 			boolean isAdmin = request.getParameter("role").equals("admin");
 			User entity = new User(id, password, fullname, email, isAdmin);
 			UserDAO.update(entity);
-			response.sendRedirect("../UserController/show");
+			response.sendRedirect("./UserController");
 		}
 
-		if (url.contains("remove")) {
+		// xoa user
+		if (action.equals("remove")) {
 			String id = request.getParameter("id");
 			UserDAO.deleteById(id);
-			response.sendRedirect("../UserController/show");
+			response.sendRedirect("./UserController");
 		}
 	}
 
