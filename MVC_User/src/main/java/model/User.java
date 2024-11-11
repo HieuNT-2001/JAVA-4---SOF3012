@@ -1,9 +1,12 @@
 
 package model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 //Annotation cho biết class User đại diện cho một bảng trong csdl
@@ -31,17 +34,21 @@ public class User {
 	// Boolean -> bit
 	Boolean admin = false;
 
+	@OneToMany(mappedBy = "user")
+	private List<Favorite> favorites;
+
 	public User() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
-	public User(String id, String password, String fullname, String email, Boolean admin) {
+	public User(String id, String password, String fullname, String email, Boolean admin, List<Favorite> favorites) {
 		super();
 		this.id = id;
 		this.password = password;
 		this.fullname = fullname;
 		this.email = email;
 		this.admin = admin;
+		this.favorites = favorites;
 	}
 
 	public String getId() {
@@ -83,4 +90,13 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+
+	public List<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<Favorite> favorites) {
+		this.favorites = favorites;
+	}
+
 }
