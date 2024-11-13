@@ -37,7 +37,7 @@ public class UserController extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setAttribute("list", UserDAO.findAll());
 		request.setAttribute("isEnable", isEnable);
-		request.setAttribute("entity", new User("", "", "", "", true));
+		request.setAttribute("entity", new User());
 		request.getRequestDispatcher("./view/User.jsp").forward(request, response);
 	}
 
@@ -57,7 +57,7 @@ public class UserController extends HttpServlet {
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
 			boolean isAdmin = request.getParameter("role").equals("admin");
-			User entity = new User(id, password, fullname, email, isAdmin);
+			User entity = new User(id, password, fullname, email, isAdmin, null);
 			UserDAO.create(entity);
 			response.sendRedirect("./UserController");
 		}
@@ -80,7 +80,7 @@ public class UserController extends HttpServlet {
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
 			boolean isAdmin = request.getParameter("role").equals("admin");
-			User entity = new User(id, password, fullname, email, isAdmin);
+			User entity = new User(id, password, fullname, email, isAdmin, null);
 			UserDAO.update(entity);
 			response.sendRedirect("./UserController");
 		}

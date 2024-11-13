@@ -31,22 +31,6 @@ CREATE TABLE [dbo].[Users]
 );
 GO
 
--- Insert rows into table 'Users' in schema '[dbo]'
-INSERT INTO [dbo].[Users]
-( -- Columns to insert data into
- [Id], [Password], [Fullname], [Email], [Admin]
-)
-VALUES
-( -- First row: values for the columns in the list above
- 'user1', 'password1', 'Nguyen Van A', 'user1@example.com', 0
-),
-( -- Second row: values for the columns in the list above
- 'user2', 'password2', 'Nguyen Van B', 'user2@example.com', 1
-),
--- Add more rows here
-('user3', 'password3', 'Nguyen Van C', 'user3@example.com', 0);
-GO
-
 -- Create a new table called '[Videos]' in schema '[dbo]'
 -- Drop the table if it already exists
 IF OBJECT_ID('[dbo].[Videos]', 'U') IS NOT NULL
@@ -73,28 +57,36 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[Favorites]
 (
-    [Id] INT NOT NULL PRIMARY KEY, -- Primary Key column
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Primary Key column
     [VideoId] CHAR(11) NOT NULL,
     [UserId] NVARCHAR(20) NOT NULL,
-    [LikeDate] DATE NOT NULL
+    [LikeDate] DATE NOT NULL,
     -- Specify more columns here
+    FOREIGN KEY (VideoId) REFERENCES Videos(Id),
+    FOREIGN KEY (UserId) REFERENCES Users(Id)
 );
 GO
 
--- Insert rows into table 'Videos' in schema '[dbo]'
-INSERT INTO [dbo].[Videos]
-( -- Columns to insert data into
- [Id], [Title], [Poster], [Description], [Active], [Views]
-)
-VALUES
-( -- First row: values for the columns in the list above
- 'video000001', 'title1', 'poster1', 'description1', 1, 10
-),
-( -- Second row: values for the columns in the list above
- 'video000002', 'title2', 'poster2', 'description2', 1, 15
-),
-( -- Second row: values for the columns in the list above
- 'video000003', 'title3', 'poster3', 'description3', 1, 20
-)
--- Add more rows here
-GO
+-- Insert 5 records into [Users] table
+INSERT INTO [dbo].[Users] (Id, Password, Fullname, Email, Admin) VALUES 
+(N'U001', N'password123', N'John Doe', N'johndoe@example.com', 0),
+(N'U002', N'password456', N'Jane Smith', N'janesmith@example.com', 1),
+(N'U003', N'password789', N'Bill Gates', N'billgates@example.com', 0),
+(N'U004', N'password101', N'Elon Musk', N'elonmusk@example.com', 0),
+(N'U005', N'password202', N'Ada Lovelace', N'adalovelace@example.com', 1);
+
+-- Insert 5 records into [Videos] table
+INSERT INTO [dbo].[Videos] (Id, Title, Poster, Description, Active, Views) VALUES 
+(N'V001', N'Video One', N'poster1.jpg', N'This is the description for Video One', 1, 100),
+(N'V002', N'Video Two', N'poster2.jpg', N'This is the description for Video Two', 1, 200),
+(N'V003', N'Video Three', N'poster3.jpg', N'This is the description for Video Three', 0, 150),
+(N'V004', N'Video Four', N'poster4.jpg', N'This is the description for Video Four', 1, 50),
+(N'V005', N'Video Five', N'poster5.jpg', N'This is the description for Video Five', 1, 300);
+
+-- Insert 5 records into [Favorites] table
+INSERT INTO [dbo].[Favorites] (VideoId, UserId, LikeDate) VALUES 
+(N'V001', N'U001', '2024-01-01'),
+(N'V002', N'U002', '2024-01-02'),
+(N'V003', N'U003', '2024-01-03'),
+(N'V004', N'U004', '2024-01-04'),
+(N'V005', N'U005', '2024-01-05');

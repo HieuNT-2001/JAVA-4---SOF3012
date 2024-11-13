@@ -48,11 +48,6 @@ public class UserDAO {
 	}
 	
 	public static void update(User entity) {
-		entity.setId(entity.getId());
-		entity.setFullname(entity.getFullname());
-		entity.setPassword(entity.getPassword());
-		entity.setEmail(entity.getEmail());
-		entity.setAdmin(entity.getAdmin());
 		try {
 			em.getTransaction().begin();
 			em.merge(entity);

@@ -32,4 +32,48 @@ public class Favorite {
 	@Temporal(TemporalType.DATE)
 	private Date likeDate;
 
+	public Favorite() {
+		super();
+	}
+
+	public Favorite(int id, Video video, User user, Date likeDate) {
+		super();
+		this.id = id;
+		this.video = video;
+		this.user = user;
+		this.likeDate = likeDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Video getVideo() {
+		return video;
+	}
+
+	public void setVideo(Video video) {
+		this.video = video;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Date getLikeDate() {
+		return likeDate;
+	}
+
+	public void setLikeDate(Date likeDate) {
+		this.likeDate = likeDate;
+	}
+
 }

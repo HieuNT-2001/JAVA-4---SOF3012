@@ -13,14 +13,14 @@ public class VideoDAO {
 
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("PolyOE");
 	static EntityManager em = factory.createEntityManager();
-	
+
 	public static List<Video> findAll() {
 		String jpql = "SELECT o FROM Video o";
 		TypedQuery<Video> query = em.createQuery(jpql, Video.class);
 		List<Video> list = query.getResultList();
 		return list;
 	}
-	
+
 	public static void main(String[] args) {
 		for (Video video : findAll()) {
 			System.out.println("Id: " + video.getId());
@@ -28,5 +28,5 @@ public class VideoDAO {
 			System.out.println("Poster: " + video.getTitle());
 		}
 	}
-	
+
 }

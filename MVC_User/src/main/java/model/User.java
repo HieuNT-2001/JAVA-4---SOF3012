@@ -32,7 +32,7 @@ public class User {
 
 	@Column(name = "admin")
 	// Boolean -> bit
-	Boolean admin = false;
+	boolean admin = false;
 
 	@OneToMany(mappedBy = "user")
 	private List<Favorite> favorites;
@@ -41,7 +41,7 @@ public class User {
 		super();
 	}
 
-	public User(String id, String password, String fullname, String email, Boolean admin, List<Favorite> favorites) {
+	public User(String id, String password, String fullname, String email, boolean admin, List<Favorite> favorites) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -83,11 +83,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Boolean getAdmin() {
+	public boolean isAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Boolean admin) {
+	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
 
