@@ -5,7 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.User;
+
 import java.io.IOException;
+
+import dao.UserDAO;
 
 /**
  * Servlet implementation class LoginController
@@ -29,7 +33,7 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("view/Login.jsp").forward(request, response);
 	}
 
 	/**
@@ -38,8 +42,23 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		// Lay du lieu tu Login,jsp
+		String account = request.getParameter("account");
+		String password = request.getParameter("password");
+		
+		// lay du lieu tu db
+		User user = UserDAO.findByIdOrEmail(account);
+		
+		// kiem tra ten dang nhap
+		if (user == null) {
+			return;
+		}
+		
+		// kiem tra mat khau va dang nhap
+		if (user.getPassword().equals(password)) {
+			request.setAttribute("userId", user.getId());
+			response.sendRedirect("./VideoController");
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ public class UserDAO {
 
 	// tim danh sach toan bo user
 	public static List<User> findAll() {
-		String jpql = "SELECT o FROM User o";
+		String jpql = "SELECT u FROM User u";
 		TypedQuery<User> query = manager.createQuery(jpql, User.class);
 		return query.getResultList();
 	}
@@ -26,11 +26,12 @@ public class UserDAO {
 		return manager.find(User.class, id);
 	}
 
-	// tim user theo email
-	public static User findByEmail(String email) {
-		String jpql = "SELECT o FROM User o WHERE o.email LIKE :email";
+	// tim user theo id hoac email
+	public static User findByIdOrEmail(String account) {
+		String jpql = "SELECT u FROM User u WHERE u.id = :id OR u.email LIKE :email";
 		TypedQuery<User> query = manager.createQuery(jpql, User.class);
-		query.setParameter("email", email);
+		query.setParameter("id", account);
+		query.setParameter("email", account);
 		return query.getSingleResult();
 	}
 
