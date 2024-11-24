@@ -16,7 +16,6 @@ import model.ProductDetail;
 @WebServlet("/FormController")
 public class FormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	boolean isEditing = false;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -32,10 +31,8 @@ public class FormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("isEditing", isEditing);
 		request.setAttribute("productDetails", ProductDetailDAO.findAll());
-		request.setAttribute("productDetail", new ProductDetail());
-		request.getRequestDispatcher("./view/Form.jsp").forward(request, response);
+		request.getRequestDispatcher("./view/AddForm.jsp").forward(request, response);
 	}
 
 	/**
@@ -64,11 +61,9 @@ public class FormController extends HttpServlet {
 		// do du lieu tu bang len form
 		if (action.equals("edit")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			isEditing = true;
-			request.setAttribute("isEditing", isEditing);
 			request.setAttribute("productDetails", ProductDetailDAO.findAll());
 			request.setAttribute("productDetail", ProductDetailDAO.findById(id));
-			request.getRequestDispatcher("./view/Form.jsp").forward(request, response);
+			request.getRequestDispatcher("./view/EditForm.jsp").forward(request, response);
 		}
 
 		// Update ban ghi trong db
@@ -85,7 +80,6 @@ public class FormController extends HttpServlet {
 			ProductDetailDAO.update(entity);
 
 			// reload lai form
-			isEditing = false;
 			response.sendRedirect("./FormController");
 		}
 

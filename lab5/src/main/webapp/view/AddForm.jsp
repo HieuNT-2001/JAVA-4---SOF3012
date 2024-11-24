@@ -18,51 +18,36 @@
         <body>
             <div class="container mt-3">
                 <form action="./FormController" method="post">
-                	<!-- id biến thể -->
-                	<input type="hidden" name="id" value="${productDetail.id}">
-                
                     <!-- tên biến thể -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên biến thể</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            value="${productDetail.productDetailName}" required>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
 
                     <!-- mô tả -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Mô tả</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                            value="${productDetail.description}" required>
+                        <input type="text" class="form-control" id="description" name="description" required>
                     </div>
 
                     <!-- giá -->
                     <div class="mb-3">
                         <label for="price" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="price" name="price" value="${productDetail.price}"
-                            required>
+                        <input type="number" class="form-control" id="price" name="price" required>
                     </div>
 
                     <!-- trạng thái -->
                     <label class="form-label">Trạng thái</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="status1" value="1"
-                            ${productDetail.status==1 ? 'checked' : '' }>
-                        <label class="form-check-label" for="status1">
-                            1
-                        </label>
+                        <input class="form-check-input" type="radio" name="status" id="status1" value="1" checked>
+                        <label class="form-check-label" for="status1">1</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="status2" value="0"
-                            ${productDetail.status !=1 ? 'checked' : '' }>
-                        <label class="form-check-label" for="status2">
-                            0
-                        </label>
+                        <input class="form-check-input" type="radio" name="status" id="status2" value="0">
+                        <label class="form-check-label" for="status2">0</label>
                     </div><br>
 
-                    <button type="submit" class="btn btn-primary" name="action" value="create" ${isEditing ? 'hidden'
-                        : '' }>Thêm</button>
-                    <button type="submit" class="btn btn-primary" name="action" value="update" ${isEditing ? ''
-                        : 'hidden' }>Lưu</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="create">Thêm</button>
                 </form>
 
                 <table class="table">
