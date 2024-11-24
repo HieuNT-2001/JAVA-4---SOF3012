@@ -6,12 +6,18 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//Annotation cho biết class User đại diện cho một bảng trong csdl
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email"),
+		@NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.admin = :role") })
+
+// Annotation cho biết class User đại diện cho một bảng trong csdl
 @Entity
-//Annotation cho biết đây là tên bảng trong csdl
+// Annotation cho biết đây là tên bảng trong csdl
 @Table(name = "Users")
 public class User {
 	// khóa chính
@@ -28,6 +34,7 @@ public class User {
 	String fullname;
 
 	@Column(name = "email")
+
 	String email;
 
 	@Column(name = "admin")

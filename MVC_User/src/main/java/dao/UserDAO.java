@@ -21,11 +21,11 @@ public class UserDAO {
 	// Tìm kiếm tất cả bàn ghi trong bảng Users
 	public static List<User> findAll() {
 		// truy vấn jpql, lấy tất cả bản ghi của lớp User
-		String jpql = "SELECT o FROM User o";
+		// String jpql = "SELECT o FROM User o";
 
 		// TypedQuery<User>: kiểu trả về khi truy vấn vào class User sẽ là kiểu <User>
 		// createQuery(): tạo câu truy vấn
-		TypedQuery<User> query = em.createQuery(jpql, User.class);
+		TypedQuery<User> query = em.createNamedQuery("User.findAll", User.class);
 
 		// getResultList(): lấy List đối tượng trả về trong class User
 		List<User> list = query.getResultList();
@@ -35,7 +35,7 @@ public class UserDAO {
 	public static User findById(String id) {
 		return em.find(User.class, id);
 	}
-	
+
 	public static void create(User entity) {
 		try {
 			em.getTransaction().begin();
@@ -46,7 +46,7 @@ public class UserDAO {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public static void update(User entity) {
 		try {
 			em.getTransaction().begin();
@@ -57,7 +57,7 @@ public class UserDAO {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public static void deleteById(String id) {
 		User entity = findById(id);
 		try {
