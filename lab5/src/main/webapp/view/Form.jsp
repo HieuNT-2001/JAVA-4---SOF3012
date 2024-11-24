@@ -17,41 +17,52 @@
 
         <body>
             <div class="container mt-3">
-                <form action="./BienTheSanPhamController" method="post">
+                <form action="./FormController" method="post">
+                	<!-- id biến thể -->
+                	<input type="hidden" name="id" value="${productDetail.id}">
+                
                     <!-- tên biến thể -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên biến thể</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="${productDetail.productDetailName}" required>
                     </div>
 
                     <!-- mô tả -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Mô tả</label>
-                        <input type="" class="form-control" id="description" name="description" required>
+                        <input type="text" class="form-control" id="description" name="description"
+                            value="${productDetail.description}" required>
                     </div>
 
                     <!-- giá -->
                     <div class="mb-3">
                         <label for="price" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="price" name="price" required>
+                        <input type="number" class="form-control" id="price" name="price" value="${productDetail.price}"
+                            required>
                     </div>
 
                     <!-- trạng thái -->
                     <label class="form-label">Trạng thái</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="status1" value="1" checked>
+                        <input class="form-check-input" type="radio" name="status" id="status1" value="1"
+                            ${productDetail.status==1 ? 'checked' : '' }>
                         <label class="form-check-label" for="status1">
                             1
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="status2" value="0">
+                        <input class="form-check-input" type="radio" name="status" id="status2" value="0"
+                            ${productDetail.status !=1 ? 'checked' : '' }>
                         <label class="form-check-label" for="status2">
                             0
                         </label>
                     </div><br>
 
-                    <button type="submit" class="btn btn-primary" name="action" value="create">Thêm</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="create" ${isEditing ? 'hidden'
+                        : '' }>Thêm</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="update" ${isEditing ? ''
+                        : 'hidden' }>Lưu</button>
                 </form>
 
                 <table class="table">
@@ -69,19 +80,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="item" items="${list }" varStatus="status">
+                        <c:forEach var="detail" items="${productDetails }" varStatus="status">
                             <tr>
                                 <td>${status.count}</td>
-                                <td>${item[0]}</td>
-                                <td>${item[1]}</td>
-                                <td>${item[2]}</td>
-                                <td>${item[3]}</td>
-                                <td>${item[4]}</td>
-                                <td>${item[5]}</td>
-                                <td>${item[6]}</td>
+                                <td>${detail.id}</td>
+                                <td>${detail.productDetailName}</td>
+                                <td>${detail.description}</td>
+                                <td>${detail.price}</td>
+                                <td>${detail.status}</td>
+                                <td>${detail.products[0].id}</td>
+                                <td>${detail.products[0].productName}</td>
                                 <td>
-                                    <form action="./BienTheSanPhamController" method="post">
-                                        <input type="hidden" name="id" value="${item[0]}">
+                                    <form action="./FormController" method="post">
+                                        <input type="hidden" name="id" value="${detail.id}">
                                         <button type="submit" name="action" value="edit">Edit</button>
                                     </form>
                                 </td>
