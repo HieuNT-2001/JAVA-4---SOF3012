@@ -11,7 +11,7 @@ import model.Product;
 
 public class ProductDAO {
 
-	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("de2");
+	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("de04");
 	static EntityManager manager = factory.createEntityManager();
 
 	public static List<Product> findAll() {
@@ -21,5 +21,9 @@ public class ProductDAO {
 
 	public static Product findById(int id) {
 		return manager.find(Product.class, id);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(findById(1));
 	}
 }

@@ -11,7 +11,7 @@ import model.ProductDetail;
 
 public class ProductDetailDAO {
 
-	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("de2");
+	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("de04");
 	static EntityManager manager = factory.createEntityManager();
 
 	public static List<ProductDetail> findAll() {
@@ -22,13 +22,6 @@ public class ProductDetailDAO {
 	public static ProductDetail findById(int id) {
 		return manager.find(ProductDetail.class, id);
 	}
-
-//	public static List<Object[]> getListBienThe() {
-//		String jpql = "SELECT bt.maBienThe, bt.tenBienThe, bt.moTa, bt.gia, bt.trangThai, sp.maSanPham, sp.tenSanPham "
-//				+ "FROM BienTheSanPham bt LEFT JOIN bt.listSanPham sp";
-//		Query query = manager.createQuery(jpql);
-//		return query.getResultList();
-//	}
 
 	public static void create(ProductDetail entity) {
 		try {

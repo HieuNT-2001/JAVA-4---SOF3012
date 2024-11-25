@@ -1,16 +1,16 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @NamedQueries({ @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p") })
@@ -21,7 +21,7 @@ public class Product {
 	@Id
 	@Column(name = "MaSanPham")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 
 	@Column(name = "TenSanPham")
 	private String productName;
@@ -50,16 +50,15 @@ public class Product {
 	@Column(name = "TrangThai")
 	private int status;
 
-	@ManyToOne
-	@JoinColumn(name = "MaBienThe")
-	private ProductDetail detail;
+	@OneToMany(mappedBy = "product")
+	private List<ProductDetail> details;
 
 	public Product() {
 		super();
 	}
 
-	public Product(long id, String productName, Date date, String description, double price, int quantity, String brand,
-			String category, String image, int status, ProductDetail detailId) {
+	public Product(int id, String productName, Date date, String description, double price, int quantity, String brand,
+			String category, String image, int status, List<ProductDetail> details) {
 		super();
 		this.id = id;
 		this.productName = productName;
@@ -71,14 +70,14 @@ public class Product {
 		this.category = category;
 		this.image = image;
 		this.status = status;
-		this.detail = detailId;
+		this.details = details;
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -154,12 +153,12 @@ public class Product {
 		this.status = status;
 	}
 
-	public ProductDetail getDetail() {
-		return detail;
+	public List<ProductDetail> getDetails() {
+		return details;
 	}
 
-	public void setDetail(ProductDetail detail) {
-		this.detail = detail;
+	public void setDetails(List<ProductDetail> details) {
+		this.details = details;
 	}
 
 }

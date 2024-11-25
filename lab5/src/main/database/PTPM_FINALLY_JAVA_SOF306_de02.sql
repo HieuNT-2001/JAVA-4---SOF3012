@@ -1,62 +1,80 @@
 -- Tạo cơ sở dữ liệu de2
-CREATE DATABASE de2;
+CREATE DATABASE de04;
 GO
 
 -- Sử dụng cơ sở dữ liệu de2
-USE de2;
+USE de04;
+GO
+
+
+-- Tạo bảng SanPham
+CREATE TABLE SanPham
+(
+    MaSanPham BIGINT IDENTITY(1,1) PRIMARY KEY,
+    -- Khóa chính
+    TenSanPham NVARCHAR(50),
+    -- Tên sản phẩm
+    NgaySanXuat DATE,
+    -- Ngày sản xuất
+    MoTa NVARCHAR(MAX),
+    -- Mô tả sản phẩm
+    GiaBan DECIMAL(18,2),
+    -- Giá bán
+    SoLuong INT,
+    -- Số lượng tồn kho
+    HangSanXuat NVARCHAR(50),
+    -- Hãng sản xuất
+    DanhMuc NVARCHAR(50),
+    -- Danh mục sản phẩm
+    AnhDaiDien NVARCHAR(50),
+    -- Ảnh đại diện
+    TrangThai INT
+    -- Trạng thái (1 - hoạt động, 0 - không hoạt động)
+);
 GO
 
 -- Tạo bảng BienTheSanPham
-CREATE TABLE BienTheSanPham (
+CREATE TABLE BienTheSanPham
+(
     MaBienThe INT IDENTITY(1,1) PRIMARY KEY,
+    -- Khóa chính
+    MaSanPham BIGINT NOT NULL REFERENCES SanPham(MaSanPham),
+    -- Khóa ngoại tham chiếu tới SanPham
     TenBienThe NVARCHAR(50),
-	MoTa NVARCHAR(MAX),
-    Gia DECIMAL(18,2) NOT NULL,
-    TrangThai INT
-);
-GO
-
--- Tạo bảng SanPham
-CREATE TABLE SanPham (
-    MaSanPham BIGINT IDENTITY(1,1) PRIMARY KEY,
-    TenSanPham NVARCHAR(50),
-	NgaySanXuat DATE,
+    -- Tên biến thể
     MoTa NVARCHAR(MAX),
-    GiaBan DECIMAL(18,2),
-	SoLuong INT,
-    HangSanXuat NVARCHAR(50),
-    DanhMuc NVARCHAR(50),
-	AnhDaiDien NVARCHAR(50),
-	TrangThai INT,
-
-	MaBienThe INT REFERENCES BienTheSanPham(MaBienThe)
+    -- Mô tả biến thể
+    Gia DECIMAL(18,2) NOT NULL,
+    -- Giá biến thể
+    TrangThai INT
+    -- Trạng thái (1 - hoạt động, 0 - không hoạt động)
 );
 GO
 
--- Chèn dữ liệu vào bảng BienTheSanPham
-INSERT INTO BienTheSanPham (TenBienThe, MoTa, Gia, TrangThai) VALUES
-('Biến thể A', 'Mô tả cho Biến thể A', 100000, 1),
-('Biến thể B', 'Mô tả cho Biến thể B', 200000, 1),
-('Biến thể C', 'Mô tả cho Biến thể C', 300000, 1),
-('Biến thể D', 'Mô tả cho Biến thể D', 400000, 0),
-('Biến thể E', 'Mô tả cho Biến thể E', 500000, 0),
-('Biến thể F', 'Mô tả cho Biến thể F', 600000, 1),
-('Biến thể G', 'Mô tả cho Biến thể G', 700000, 1),
-('Biến thể H', 'Mô tả cho Biến thể H', 800000, 0),
-('Biến thể I', 'Mô tả cho Biến thể I', 900000, 0),
-('Biến thể J', 'Mô tả cho Biến thể J', 1000000, 1);
-GO
+INSERT INTO SanPham
+    (TenSanPham, NgaySanXuat, MoTa, GiaBan, SoLuong, HangSanXuat, DanhMuc, AnhDaiDien, TrangThai)
+VALUES
+    (N'Sản phẩm A', '2023-01-01', N'Sản phẩm cao cấp', 500000, 100, N'Hãng X', N'Danh mục 1', N'sp_a.jpg', 1),
+    (N'Sản phẩm B', '2023-02-01', N'Sản phẩm phổ thông', 300000, 200, N'Hãng Y', N'Danh mục 2', N'sp_b.jpg', 1),
+    (N'Sản phẩm C', '2023-03-01', N'Sản phẩm trung cấp', 400000, 150, N'Hãng Z', N'Danh mục 3', N'sp_c.jpg', 1),
+    (N'Sản phẩm D', '2023-04-01', N'Sản phẩm độc đáo', 700000, 80, N'Hãng X', N'Danh mục 1', N'sp_d.jpg', 1),
+    (N'Sản phẩm E', '2023-05-01', N'Sản phẩm giá rẻ', 200000, 300, N'Hãng Y', N'Danh mục 2', N'sp_e.jpg', 1);
 
--- Chèn dữ liệu vào bảng SanPham
-INSERT INTO SanPham (TenSanPham, NgaySanXuat, MoTa, GiaBan, SoLuong, HangSanXuat, DanhMuc, AnhDaiDien, TrangThai, MaBienThe) VALUES
-('Sản phẩm 1', '2022-01-01', 'Mô tả sản phẩm 1', 120000, 100, 'Hãng A', 'Danh mục X', 'sp1.jpg', 1, 1),
-('Sản phẩm 2', '2022-02-01', 'Mô tả sản phẩm 2', 220000, 200, 'Hãng B', 'Danh mục Y', 'sp2.jpg', 1, 2),
-('Sản phẩm 3', '2022-03-01', 'Mô tả sản phẩm 3', 320000, 300, 'Hãng C', 'Danh mục Z', 'sp3.jpg', 1, 3),
-('Sản phẩm 4', '2022-04-01', 'Mô tả sản phẩm 4', 420000, 400, 'Hãng D', 'Danh mục X', 'sp4.jpg', 0, 4),
-('Sản phẩm 5', '2022-05-01', 'Mô tả sản phẩm 5', 520000, 500, 'Hãng E', 'Danh mục Y', 'sp5.jpg', 0, 5),
-('Sản phẩm 6', '2022-06-01', 'Mô tả sản phẩm 6', 620000, 600, 'Hãng F', 'Danh mục Z', 'sp6.jpg', 1, 6),
-('Sản phẩm 7', '2022-07-01', 'Mô tả sản phẩm 7', 720000, 700, 'Hãng G', 'Danh mục X', 'sp7.jpg', 1, 7),
-('Sản phẩm 8', '2022-08-01', 'Mô tả sản phẩm 8', 820000, 800, 'Hãng H', 'Danh mục Y', 'sp8.jpg', 0, 8),
-('Sản phẩm 9', '2022-09-01', 'Mô tả sản phẩm 9', 920000, 900, 'Hãng I', 'Danh mục Z', 'sp9.jpg', 0, 9),
-('Sản phẩm 10', '2022-10-01', 'Mô tả sản phẩm 10', 1020000, 1000, 'Hãng J', 'Danh mục X', 'sp10.jpg', 1, 10);
-GO
+INSERT INTO BienTheSanPham
+    (MaSanPham, TenBienThe, MoTa, Gia, TrangThai)
+VALUES
+    (1, N'Biến thể A1', N'Màu Đỏ, Size M', 520000, 1),
+    (1, N'Biến thể A2', N'Màu Đỏ, Size L', 530000, 1),
+    (2, N'Biến thể B1', N'Màu Xanh, Size S', 310000, 1),
+    (2, N'Biến thể B2', N'Màu Xanh, Size M', 320000, 1),
+    (3, N'Biến thể C1', N'Màu Trắng, Size M', 410000, 1),
+    (3, N'Biến thể C2', N'Màu Trắng, Size L', 420000, 1),
+    (4, N'Biến thể D1', N'Màu Đen, Size XL', 710000, 1),
+    (4, N'Biến thể D2', N'Màu Đen, Size XXL', 720000, 1),
+    (5, N'Biến thể E1', N'Màu Hồng, Size S', 210000, 1),
+    (5, N'Biến thể E2', N'Màu Hồng, Size M', 220000, 1);
+
+select *
+from SanPham
+select *
+from BienTheSanPham

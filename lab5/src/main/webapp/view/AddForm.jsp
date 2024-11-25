@@ -38,14 +38,21 @@
 
                     <!-- trạng thái -->
                     <label class="form-label">Trạng thái</label>
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="status" id="status1" value="1" checked>
                         <label class="form-check-label" for="status1">1</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="status" id="status2" value="0">
                         <label class="form-check-label" for="status2">0</label>
                     </div><br>
+
+                    <!-- Sản phẩm -->
+                    <select class="form-select">
+                        <c:forEach var="product" items="${products }" varStatus="status">
+                            <option value="${product.id}">${product.productName }</option>
+                        </c:forEach>
+                    </select>
 
                     <button type="submit" class="btn btn-primary" name="action" value="create">Thêm</button>
                 </form>
@@ -65,19 +72,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="detail" items="${productDetails }" varStatus="status">
+                        <c:forEach var="productDetail" items="${productDetails }" varStatus="status">
                             <tr>
                                 <td>${status.count}</td>
-                                <td>${detail.id}</td>
-                                <td>${detail.productDetailName}</td>
-                                <td>${detail.description}</td>
-                                <td>${detail.price}</td>
-                                <td>${detail.status}</td>
-                                <td>${detail.products[0].id}</td>
-                                <td>${detail.products[0].productName}</td>
+                                <td>${productDetail.id}</td>
+                                <td>${productDetail.productDetailName}</td>
+                                <td>${productDetail.description}</td>
+                                <td>${productDetail.price}</td>
+                                <td>${productDetail.status}</td>
+                                <td>${productDetail.product.id}</td>
+                                <td>${productDetail.product.productName}</td>
                                 <td>
                                     <form action="./FormController" method="post">
-                                        <input type="hidden" name="id" value="${detail.id}">
+                                        <input type="hidden" name="id" value="${productDetail.id}">
                                         <button type="submit" name="action" value="edit">Edit</button>
                                     </form>
                                 </td>

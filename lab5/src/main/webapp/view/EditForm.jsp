@@ -55,6 +55,9 @@
                         <label class="form-check-label" for="status2">0</label>
                     </div><br>
 
+                    <!-- mã sản phẩm -->
+                    <input type="hidden" name="productId" value="${productDetail.product.id}">
+
                     <button type="submit" class="btn btn-primary" name="action" value="update">Lưu</button>
                 </form>
             </div>

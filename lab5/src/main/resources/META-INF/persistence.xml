@@ -5,14 +5,14 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
 	<!-- <persistence-unit name="tên cơ sở dữ liệu"> -->
-	<persistence-unit name="de2">
+	<persistence-unit name="de04">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<!-- tự thêm url csdl, tên csdl, tên instanceName -->
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://localhost:1433;databaseName=de2;encrypt=true;trustServerCertificate=true" />
+				value="jdbc:sqlserver://localhost:1433;databaseName=de04;encrypt=true;trustServerCertificate=true" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<!-- password -->
 			<property name="javax.persistence.jdbc.password" value="123456" />

@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.ProductDetail;
 
 /**
  * Servlet implementation class BienTheSanPhamController
@@ -41,47 +40,52 @@ public class FormController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// lay du lieu tu jsp
+//		String name = request.getParameter("name");
+//		String description = request.getParameter("description");
+//		String inputPrice = request.getParameter("price"); // Kiem gia rong input chuoi gia ban
+//		int status = Integer.parseInt(request.getParameter("status"));
 		String action = request.getParameter("action");
 
+//		// Kiem tra trong Form
+//		if (name.isBlank() || description.isBlank() || inputPrice.isBlank()) {
+//			return;
+//		}
+//
+//		// chuyen chuoi gia ban sang so
+//		double price = Double.parseDouble(inputPrice);
+
 		// them bien the
-		if (action.equals("create")) {
-			// lay du lieu tu jsp
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			double price = Double.parseDouble(request.getParameter("price"));
-			int status = Integer.parseInt(request.getParameter("status"));
-
-			// them vao db
-			ProductDetail entity = new ProductDetail(0, name, description, price, status, null);
-			ProductDetailDAO.create(entity);
-
-			response.sendRedirect("./FormController");
-		}
+//		if (action.equals("create")) {
+//			// them vao db
+//			ProductDetail entity = new ProductDetail(0, name, description, price, status, ProductDAO.findById(1));
+//			ProductDetailDAO.create(entity);
+//
+//			// reload lai form
+//			response.sendRedirect("./FormController");
+//		}
 
 		// do du lieu tu bang len form
 		if (action.equals("edit")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			request.setAttribute("productDetails", ProductDetailDAO.findAll());
 			request.setAttribute("productDetail", ProductDetailDAO.findById(id));
 			request.getRequestDispatcher("./view/EditForm.jsp").forward(request, response);
 		}
 
 		// Update ban ghi trong db
-		if (action.equals("update")) {
-			// lay du lieu tu jsp
-			int id = Integer.parseInt(request.getParameter("id"));
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			double price = Double.parseDouble(request.getParameter("price"));
-			int status = Integer.parseInt(request.getParameter("status"));
-
-			// sua trong db
-			ProductDetail entity = new ProductDetail(id, name, description, price, status, null);
-			ProductDetailDAO.update(entity);
-
-			// reload lai form
-			response.sendRedirect("./FormController");
-		}
+//		if (action.equals("update")) {
+//			// Lay id tu jsp
+//			int id = Integer.parseInt(request.getParameter("id"));
+//			int productId = Integer.parseInt(request.getParameter("productId"));
+//			Product product = ProductDAO.findById(productId);
+//
+//			// sua trong db
+//			ProductDetail entity = new ProductDetail(id, name, description, price, status, product);
+//			ProductDetailDAO.update(entity);
+//
+//			// reload lai form
+//			response.sendRedirect("./FormController");
+//		}
 
 	}
 
