@@ -17,6 +17,7 @@ import model.ProductDetail;
  */
 @WebServlet("/FormController")
 public class FormController extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -34,6 +35,7 @@ public class FormController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("productDetails", ProductDetailDAO.findAll());
+		request.setAttribute("products", ProductDAO.findAll());
 		request.getRequestDispatcher("./view/AddForm.jsp").forward(request, response);
 	}
 
@@ -43,53 +45,69 @@ public class FormController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// lay du lieu tu jsp
-		String name = request.getParameter("name");
-		String description = request.getParameter("description");
-		String inputPrice = request.getParameter("price"); // Kiem gia rong input chuoi gia ban
-		int status = Integer.parseInt(request.getParameter("status"));
 		String action = request.getParameter("action");
-
-		// Kiem tra trong Form
-		if (name.isBlank() || description.isBlank() || inputPrice.isBlank()) {
-			return;
-		}
-
-		// chuyen chuoi gia ban sang so
-		double price = Double.parseDouble(inputPrice);
 
 		// them bien the
 		if (action.equals("create")) {
-			// them vao db
-			ProductDetail entity = new ProductDetail(0, name, description, price, status, ProductDAO.findById(1));
-			ProductDetailDAO.create(entity);
-
-			// reload lai form
-			response.sendRedirect("./FormController");
+			ProductDetail productDetail = getProductDetail(request);
+			if (productDetail != null) {
+				ProductDetailDAO.create(productDetail);
+				response.sendRedirect("./FormController");
+			}
 		}
 
-		// do du lieu tu bang len form
+		// mo Form edit
 		if (action.equals("edit")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			request.setAttribute("productDetail", ProductDetailDAO.findById(id));
+			String id = request.getParameter("productDetailId");
+			ProductDetail productDetail = ProductDetailDAO.findById(Integer.parseInt(id));
+			request.setAttribute("productDetail", productDetail);
+			request.setAttribute("products", ProductDAO.findAll());
 			request.getRequestDispatcher("./view/EditForm.jsp").forward(request, response);
 		}
 
-		// Update ban ghi trong db
+		// Update bien the
 		if (action.equals("update")) {
-			// Lay id tu jsp
-			int id = Integer.parseInt(request.getParameter("id"));
-			int productId = Integer.parseInt(request.getParameter("productId"));
-			Product product = ProductDAO.findById(productId);
+			ProductDetail productDetail = getProductDetail(request);
+			if (productDetail != null) {
+				ProductDetailDAO.update(productDetail);
+				response.sendRedirect("./FormController");
+			}
+		}
+	}
 
-			// sua trong db
-			ProductDetail entity = new ProductDetail(id, name, description, price, status, product);
-			ProductDetailDAO.update(entity);
+	// lay productDetail tu Form
+	ProductDetail getProductDetail(HttpServletRequest request) {
+		// lay du lieu tu form jsp
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String description = request.getParameter("description");
+		String price = request.getParameter("price");
+		String status = request.getParameter("status");
+		Product product = getProduct(request);
 
-			// reload lai form
-			response.sendRedirect("./FormController");
+		// validate du lieu
+		if (isValidate(name, description, price)) {
+			ProductDetail productDetail = new ProductDetail();
+			productDetail.setId(Integer.parseInt(id));
+			productDetail.setProductDetailName(name);
+			productDetail.setDescription(description);
+			productDetail.setPrice(Double.parseDouble(price));
+			productDetail.setStatus(Integer.parseInt(status));
+			productDetail.setProduct(product);
+			return productDetail;
 		}
 
+		return null;
+	}
+
+	// lay product tu truong product
+	Product getProduct(HttpServletRequest request) {
+		String productId = request.getParameter("product");
+		return ProductDAO.findById(Integer.parseInt(productId));
+	}
+
+	boolean isValidate(String name, String description, String price) {
+		return !(name.isBlank() || description.isBlank() || price.isBlank());
 	}
 
 }

@@ -55,8 +55,14 @@
                         <label class="form-check-label" for="status2">0</label>
                     </div><br>
 
-                    <!-- mã sản phẩm -->
-                    <input type="hidden" name="productId" value="${productDetail.product.id}">
+                    <!-- Sản phẩm -->
+                    <select class="form-select" name="product">
+                        <c:forEach var="product" items="${products }" varStatus="status">
+                            <option value="${product.id}" ${product.id==productDetail.product.id ? 'selected' : '' }>
+                                ${product.productName }
+                            </option>
+                        </c:forEach>
+                    </select>
 
                     <button type="submit" class="btn btn-primary" name="action" value="update">Lưu</button>
                 </form>

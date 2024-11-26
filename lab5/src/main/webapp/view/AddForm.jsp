@@ -18,6 +18,9 @@
         <body>
             <div class="container mt-3">
                 <form action="./FormController" method="post">
+                    <!-- id biến thể -->
+                    <input type="hidden" name="id" value="0">
+
                     <!-- tên biến thể -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên biến thể</label>
@@ -48,7 +51,7 @@
                     </div><br>
 
                     <!-- Sản phẩm -->
-                    <select class="form-select">
+                    <select class="form-select" name="product">
                         <c:forEach var="product" items="${products }" varStatus="status">
                             <option value="${product.id}">${product.productName }</option>
                         </c:forEach>
@@ -84,7 +87,7 @@
                                 <td>${productDetail.product.productName}</td>
                                 <td>
                                     <form action="./FormController" method="post">
-                                        <input type="hidden" name="id" value="${productDetail.id}">
+                                        <input type="hidden" name="productDetailId" value="${productDetail.id}">
                                         <button type="submit" name="action" value="edit">Edit</button>
                                     </form>
                                 </td>
