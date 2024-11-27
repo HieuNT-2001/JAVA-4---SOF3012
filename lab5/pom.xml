@@ -2,11 +2,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>MVC_User</groupId>
-	<artifactId>MVC_User</artifactId>
+	<groupId>lab5</groupId>
+	<artifactId>lab5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>MVC_User</name>
+	<name>lab5</name>
 	<dependencies>
 		<!-- JPA -->
 		<dependency>
@@ -48,6 +48,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>lab5</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
